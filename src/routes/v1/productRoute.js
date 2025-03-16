@@ -7,7 +7,7 @@ const Router = express.Router()
 
 Router.route('/')
     .get((req, res) => {
-        res.status(StatusCodes.OK).json({ message: 'Get list products OK' })
+        res.status(StatusCodes.OK).json({ message: 'Get list category OK' })
     })
     .post(productValidation.createNew, productController.createNew)
 

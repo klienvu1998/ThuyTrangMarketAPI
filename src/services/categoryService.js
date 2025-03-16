@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 const { categoryModel } = require('~/models/categoryModel')
 const { slugify } = require('~/utils/formatters')
 
@@ -18,6 +19,17 @@ const createNew = async (reqBody) => {
     }
 }
 
+const getCategories = async () => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const result = await categoryModel.getCategories()
+        return result
+    } catch (error) {
+        throw error
+    }
+}
+
 export const categoryService = {
-    createNew
+    createNew,
+    getCategories
 }

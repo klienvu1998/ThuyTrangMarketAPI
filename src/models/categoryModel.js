@@ -7,7 +7,7 @@ const Joi = require('joi')
 
 const CATEGORY_COLLECTION_NAME = 'categories'
 const CATEGORY_COLLECTION_SCHEMA = Joi.object({
-  name: Joi.string().required().min(3).trim.strict()
+  name: Joi.string().required().min(3).trim().strict()
 })
 
 const createNew = async (data) => {
@@ -53,9 +53,20 @@ const getDetails = async (id) => {
   }
 }
 
+const getCategories = async () => {
+  try {
+    const result = await GET_DB().collection(CATEGORY_COLLECTION_NAME).find({}).toArray()
+    return result
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
 export const categoryModel = {
   CATEGORY_COLLECTION_NAME,
   CATEGORY_COLLECTION_SCHEMA,
   createNew,
-  findOneById
+  findOneById,
+  getDetails,
+  getCategories
 }
