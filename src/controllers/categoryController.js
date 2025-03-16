@@ -22,6 +22,27 @@ const createNew = async (req, res, next) => {
     }
 }
 
+const getCategories = async (req, res, next) => {
+    try {
+        const result = await categoryService.getCategories()
+        res.status(StatusCodes.OK).json(result)
+    } catch (error) {
+        next(error)
+    }
+}
+
+const getDetails = async (req, res, next) => {
+    try {
+        const categoryId = req.params.categoryId
+        const result = await categoryService.getDetails(categoryId)
+        res.status(StatusCodes.OK).json(result)
+    } catch (error) {
+        next(error)
+    }
+}
+
 export const categoryController = {
-    createNew
+    createNew,
+    getCategories,
+    getDetails
 }

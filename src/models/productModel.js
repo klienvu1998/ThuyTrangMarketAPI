@@ -1,6 +1,7 @@
 import { GET_DB } from '~/config/mongodb'
 import { OBJECT_ID_RULE, OBJECT_ID_RULE_MESSAGE } from './validator'
 import { ObjectId } from 'mongodb'
+import ApiError from '~/utils/apiError'
 
 const Joi = require('joi')
 
@@ -8,7 +9,7 @@ const PRODUCT_COLLECTION_NAME = 'products'
 const PRODUCT_COLLECTION_SCHEMA = Joi.object({
     name: Joi.string().required().min(3).trim().strict(),
     categoryId: Joi.string().required().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
-    description: Joi.string().min(3).trim().strict(),
+    description: Joi.string().trim().optional(),
     price: Joi.number().required().strict(),
     slug: Joi.string().required().min(3).trim().strict(),
     createAt: Joi.date().timestamp('javascript').default(Date.now),
@@ -34,9 +35,31 @@ const findOneById = async (id) => {
     }
 }
 
+const getProducts = async (categoryId) => {
+    try {
+        const products = await GET_DB().collection(PRODUCT_COLLECTION_NAME).findById(categoryId)
+        return products
+    } catch (error) {
+        // Handle database errors
+        throw new Error(error)
+    }
+}
+
+const getProductsByCategoryId = async (categoryId) => {
+    try {
+        const products = await GET_DB().collection(PRODUCT_COLLECTION_NAME).find({ categoryId: categoryId }).toArray()
+        return products
+    } catch (error) {
+        // Handle database errors
+        throw new Error(error)
+    }
+}
+
 export const productModel = {
     PRODUCT_COLLECTION_NAME,
     PRODUCT_COLLECTION_SCHEMA,
     createNew,
-    findOneById
+    findOneById,
+    getProducts,
+    getProductsByCategoryId
 }

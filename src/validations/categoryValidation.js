@@ -5,10 +5,7 @@ const Joi = require("joi")
 
 const createNew = async (req, res, next) => {
     const correctCondition = Joi.object({
-        name: Joi.string().required().min(3).trim().strict(),
-        categoryId: Joi.string().required().strict(),
-        description: Joi.string().trim().optional().allow(''),
-        price: Joi.number().required().strict()
+        name: Joi.string().required().min(3).trim().strict()
     })
     try {
         await correctCondition.validateAsync(req.body, { abortEarly: false })
@@ -20,6 +17,6 @@ const createNew = async (req, res, next) => {
     }
 }
 
-export const productValidation = {
+export const categoryValidation = {
     createNew
 }

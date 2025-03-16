@@ -22,6 +22,26 @@ const createNew = async (req, res, next) => {
     }
 }
 
+const getProducts = async (req, res, next) => {
+    try {
+        const categoryId = req.query.categoryId
+        const productId = req.query.productId
+        if (categoryId) {
+            const result = await productService.getProductsByCategoryId(categoryId)
+            res.status(StatusCodes.OK).json(result)
+        } else if (productId) {
+            const result = await productService.getProducts(categoryId)
+            res.status(StatusCodes.OK).json(result)
+        } else {
+            res.status(StatusCodes.OK).json("")
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
+
 export const productController = {
-    createNew
+    createNew,
+    getProducts
 }

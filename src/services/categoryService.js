@@ -1,3 +1,7 @@
+import { StatusCodes } from 'http-status-codes'
+import ApiError from '~/utils/apiError'
+
+/* eslint-disable indent */
 const { categoryModel } = require('~/models/categoryModel')
 const { slugify } = require('~/utils/formatters')
 
@@ -18,6 +22,26 @@ const createNew = async (reqBody) => {
     }
 }
 
+const getCategories = async () => {
+    // eslint-disable-next-line no-useless-catch
+    try {
+        const result = await categoryModel.getCategories()
+        return result
+    } catch (error) {
+        throw error
+    }
+}
+
+const getDetails = async (categoryId) => {
+    const result = await categoryModel.getDetails(categoryId)
+    if (!result) {
+        throw new ApiError(StatusCodes.NOT_FOUND)
+    }
+    return result
+}
+
 export const categoryService = {
-    createNew
+    createNew,
+    getCategories,
+    getDetails
 }
