@@ -9,5 +9,9 @@ Router.route('/')
     .get(productController.getProducts)
     .post(productValidation.createNew, productController.createNew)
 
+Router.route('/:id')
+    .put(productValidation.update, productController.update)
+    .delete(productController.deleteItem)
+
 
 export const productRoute = Router

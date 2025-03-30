@@ -1,6 +1,6 @@
 import { GET_DB } from '~/config/mongodb'
 import { OBJECT_ID_RULE, OBJECT_ID_RULE_MESSAGE } from './validator'
-import { ObjectId } from 'mongodb'
+import { ObjectId, ReturnDocument } from 'mongodb'
 import ApiError from '~/utils/apiError'
 
 const Joi = require('joi')
@@ -55,11 +55,35 @@ const getProductsByCategoryId = async (categoryId) => {
     }
 }
 
+const update = async (productId, updateData) => {
+    try {
+        const result = await GET_DB().collection(PRODUCT_COLLECTION_NAME).findOneAndUpdate(
+            { _id: new ObjectId(productId) },
+            { $set: updateData },
+            { returnDocument: 'after' }
+        )
+        return result
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const deleteOneById = async (productId) => {
+    try {
+        const result = await GET_DB().collection(PRODUCT_COLLECTION_NAME).deleteOne({ _id: new ObjectId(productId) })
+        return result
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 export const productModel = {
     PRODUCT_COLLECTION_NAME,
     PRODUCT_COLLECTION_SCHEMA,
     createNew,
     findOneById,
     getProducts,
-    getProductsByCategoryId
+    getProductsByCategoryId,
+    update,
+    deleteOneById
 }

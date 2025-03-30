@@ -44,8 +44,23 @@ const getProductsByCategoryId = async (categoryId) => {
     }
 }
 
+const update = async (productId, reqBody) => {
+    const updateData = {
+        ...reqBody,
+        updatedAt: Date.now()
+    }
+    const updatedProduct = await productModel.update(productId, updateData)
+    return updatedProduct
+}
+
+const deleteItem = async (productId, reqBody) => {
+    return await productModel.deleteOneById(productId)
+}
+
 export const productService = {
     createNew,
     getProducts,
-    getProductsByCategoryId
+    getProductsByCategoryId,
+    update,
+    deleteItem
 }
