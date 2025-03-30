@@ -36,9 +36,9 @@ const findOneById = async (id) => {
     }
 }
 
-const getProducts = async (categoryId) => {
+const getProducts = async (productId) => {
     try {
-        const products = await GET_DB().collection(PRODUCT_COLLECTION_NAME).findById(categoryId)
+        const products = await GET_DB().collection(PRODUCT_COLLECTION_NAME).findOne({ _id: new ObjectId(productId) })
         return products
     } catch (error) {
         // Handle database errors

@@ -30,7 +30,7 @@ const getProducts = async (req, res, next) => {
             const result = await productService.getProductsByCategoryId(categoryId)
             res.status(StatusCodes.OK).json(result)
         } else if (productId) {
-            const result = await productService.getProducts(categoryId)
+            const result = await productService.getProducts(productId)
             res.status(StatusCodes.OK).json(result)
         } else {
             res.status(StatusCodes.OK).json("")

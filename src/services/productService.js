@@ -21,10 +21,10 @@ const createNew = async (reqBody) => {
     }
 }
 
-const getProducts = async (categoryId) => {
+const getProducts = async (productId) => {
     // eslint-disable-next-line no-useless-catch
     try {
-        const result = await productModel.getProducts(categoryId)
+        const result = await productModel.getProducts(productId)
         return result
     } catch (error) {
         throw error

@@ -26,7 +26,8 @@ const update = async (req, res, next) => {
         name: Joi.string().required().min(3).trim().strict(),
         categoryId: Joi.string().required().strict(),
         description: Joi.string().trim().optional().allow(''),
-        price: Joi.number().required().strict()
+        price: Joi.number().required().strict(),
+        clientId: Joi.string().optional()
     })
 
     try {
