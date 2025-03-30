@@ -8,6 +8,7 @@ const Joi = require('joi')
 const PRODUCT_COLLECTION_NAME = 'products'
 const PRODUCT_COLLECTION_SCHEMA = Joi.object({
     name: Joi.string().required().min(3).trim().strict(),
+    clientId: Joi.string().required().trim().strict(),
     categoryId: Joi.string().required().pattern(OBJECT_ID_RULE).message(OBJECT_ID_RULE_MESSAGE),
     description: Joi.string().trim().optional(),
     price: Joi.number().required().strict(),
