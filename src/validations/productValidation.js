@@ -28,7 +28,7 @@ const update = async (req, res, next) => {
         description: Joi.string().trim().optional().allow(''),
         price: Joi.number().required().strict(),
         clientId: Joi.string().optional()
-    })
+    }).unknown(true)
 
     try {
         await correctCondition.validateAsync(req.body, { abortEarly: false })

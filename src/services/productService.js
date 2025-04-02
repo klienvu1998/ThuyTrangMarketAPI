@@ -47,6 +47,7 @@ const getProductsByCategoryId = async (categoryId) => {
 const update = async (productId, reqBody) => {
     const updateData = {
         ...reqBody,
+        slug: slugify(reqBody.name),
         updatedAt: Date.now()
     }
     const updatedProduct = await productModel.update(productId, updateData)
